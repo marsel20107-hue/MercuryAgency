@@ -1,0 +1,1701 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mercury Agency - Агентство профессионального монтажа</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #000;
+            color: #fff;
+            overflow-x: hidden;
+            position: relative;
+            min-height: 100vh;
+            padding-bottom: 100px;
+        }
+
+        /* Эффект сетки с подсветкой */
+        #grid-effect {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+            opacity: 0.1;
+            background-image: 
+                linear-gradient(to right, #444 1px, transparent 1px),
+                linear-gradient(to bottom, #444 1px, transparent 1px);
+            background-size: 50px 50px;
+        }
+
+        /* Эффект подсветки при движении курсора */
+        #light-spot {
+            position: fixed;
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 70%);
+            pointer-events: none;
+            z-index: -1;
+            transform: translate(-50%, -50%);
+            transition: transform 0.1s ease-out;
+        }
+
+        /* Навигационная панель */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 15px 0;
+            z-index: 1000;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+            opacity: 0;
+            transform: translateY(-100%);
+            animation: slideDown 0.8s ease-out 0.3s forwards;
+        }
+
+        @keyframes slideDown {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .navbar .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 15px;
+        }
+
+        .logo {
+            font-size: 1.4rem;
+            font-weight: 900;
+            letter-spacing: 1.5px;
+            color: #fff;
+            text-decoration: none;
+            text-transform: uppercase;
+            opacity: 0;
+            transform: translateX(-20px);
+            animation: fadeInRight 0.8s ease-out 0.5s forwards;
+            white-space: nowrap;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 25px;
+            opacity: 0;
+            transform: translateX(20px);
+            animation: fadeInLeft 0.8s ease-out 0.5s forwards;
+        }
+
+        @keyframes fadeInRight {
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes fadeInLeft {
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .nav-links a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 1rem;
+            font-weight: 500;
+            transition: color 0.3s;
+            position: relative;
+            padding: 5px 0;
+            white-space: nowrap;
+        }
+
+        .nav-links a:hover {
+            color: #aaa;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: #fff;
+            transition: width 0.3s;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 1.3rem;
+            cursor: pointer;
+            padding: 5px;
+        }
+
+        /* Основные стили */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        /* Герой секция */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 20px;
+            padding-top: 80px;
+            overflow: hidden;
+        }
+
+        .hero-content {
+            max-width: 700px;
+        }
+
+        .hero h1 {
+            font-size: 4.5rem;
+            letter-spacing: 3px;
+            margin-bottom: 30px;
+            background: linear-gradient(to right, #fff, #aaa);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-transform: uppercase;
+            font-weight: 900;
+            line-height: 1.1;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 1s ease-out 0.7s forwards;
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            line-height: 1.7;
+            color: #ddd;
+            margin-bottom: 20px;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .hero p:nth-child(2) {
+            animation: fadeInUp 1s ease-out 0.9s forwards;
+        }
+
+        .hero p:nth-child(3) {
+            animation: fadeInUp 1s ease-out 1.1s forwards;
+        }
+
+        /* Секция работ */
+        .works {
+            padding: 80px 0;
+        }
+
+        .section-title {
+            font-size: 2.8rem;
+            text-align: center;
+            margin-bottom: 60px;
+            position: relative;
+            color: #fff;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+
+        .section-title.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background-color: #fff;
+        }
+
+        .video-gallery {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            flex-wrap: wrap;
+        }
+
+        .video-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .video-container.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .video-container:nth-child(1) { transition-delay: 0.1s; }
+        .video-container:nth-child(2) { transition-delay: 0.2s; }
+        .video-container:nth-child(3) { transition-delay: 0.3s; }
+
+        .video-item {
+            width: 280px;
+            height: 498px;
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            background-color: #000;
+            transform: scale(0.95);
+            transition: transform 0.5s ease, box-shadow 0.5s ease;
+        }
+
+        .video-container.visible .video-item {
+            transform: scale(1);
+        }
+
+        .video-container.center .video-item {
+            transform: scale(1.05);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.7);
+        }
+
+        .video-container.center.visible .video-item {
+            transform: scale(1.05);
+        }
+
+        /* Подпись ПОД видео */
+        .video-caption {
+            margin-top: 15px;
+            padding: 12px 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            text-align: center;
+            width: 100%;
+            max-width: 280px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.5s ease 0.3s;
+        }
+
+        .video-container.visible .video-caption {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .video-caption a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s;
+            font-size: 1rem;
+        }
+
+        .video-caption a:hover {
+            color: #aaa;
+            transform: translateY(-2px);
+        }
+
+        /* Стили для видео */
+        .video-wrapper {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            overflow: hidden;
+            border-radius: 10px;
+        }
+
+        .video-item video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.3s ease;
+        }
+
+        .video-item:hover video {
+            transform: scale(1.05);
+        }
+
+        /* Заглушка если видео не загрузилось */
+        .video-fallback {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, #222, #444);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #aaa;
+            font-size: 1.1rem;
+            text-align: center;
+            padding: 20px;
+        }
+
+        /* Секция выбора сложности монтажа */
+        .complexity-selector {
+            padding: 40px 0;
+            text-align: center;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+
+        .complexity-selector.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .complexity-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+
+        .complexity-btn {
+            background-color: #111;
+            color: #fff;
+            border: 2px solid #333;
+            padding: 12px 25px;
+            font-size: 1.1rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 600;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .complexity-selector.visible .complexity-btn {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .complexity-selector.visible .complexity-btn:nth-child(1) { transition: all 0.5s ease 0.1s; }
+        .complexity-selector.visible .complexity-btn:nth-child(2) { transition: all 0.5s ease 0.2s; }
+        .complexity-selector.visible .complexity-btn:nth-child(3) { transition: all 0.5s ease 0.3s; }
+
+        .complexity-btn:hover {
+            background-color: #222;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .complexity-btn.active {
+            background-color: #fff;
+            color: #000;
+            border-color: #fff;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Секция тарифов */
+        .pricing {
+            padding: 60px 0 80px;
+            background-color: rgba(20, 20, 20, 0.7);
+        }
+
+        .pricing-cards {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            flex-wrap: wrap;
+        }
+
+        .pricing-card {
+            background-color: #111;
+            border-radius: 10px;
+            padding: 30px 20px;
+            width: 300px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            opacity: 0;
+            transform: translateY(50px) scale(0.9);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .pricing-card.visible {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+
+        .pricing-card:nth-child(1) { transition-delay: 0.1s; }
+        .pricing-card:nth-child(2) { transition-delay: 0.2s; }
+        .pricing-card:nth-child(3) { transition-delay: 0.3s; }
+
+        .pricing-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5);
+        }
+
+        .pricing-card.featured {
+            border: 2px solid #fff;
+            transform: scale(1.05);
+        }
+
+        .pricing-card.featured.visible {
+            transform: scale(1.05);
+        }
+
+        .pricing-card.featured:hover {
+            transform: scale(1.05) translateY(-10px);
+        }
+
+        .pricing-card h3 {
+            font-size: 1.6rem;
+            margin-bottom: 15px;
+            color: #fff;
+        }
+
+        .pricing-price {
+            font-size: 2.2rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: #fff;
+        }
+
+        .pricing-feature {
+            font-size: 1rem;
+            margin-bottom: 12px;
+            color: #ddd;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: all 0.3s ease;
+        }
+
+        .pricing-card.visible .pricing-feature {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .pricing-card.visible .pricing-feature:nth-child(1) { transition-delay: 0.4s; }
+        .pricing-card.visible .pricing-feature:nth-child(2) { transition-delay: 0.5s; }
+        .pricing-card.visible .pricing-feature:nth-child(3) { transition-delay: 0.6s; }
+
+        .pricing-saving {
+            display: inline-block;
+            background-color: #333;
+            color: #fff;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-weight: bold;
+            margin-top: 10px;
+            font-size: 0.9rem;
+            opacity: 0;
+            transform: scale(0.8);
+            transition: all 0.3s ease 0.7s;
+        }
+
+        .pricing-card.visible .pricing-saving {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        /* Кнопка заказа в тарифах */
+        .pricing-order-btn {
+            margin-top: auto;
+            padding-top: 20px;
+        }
+
+        .order-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            background-color: #fff;
+            color: #000;
+            border: none;
+            padding: 12px 25px;
+            font-size: 1rem;
+            font-weight: bold;
+            border-radius: 50px;
+            text-decoration: none;
+            transition: all 0.3s;
+            cursor: pointer;
+            width: 100%;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: all 0.3s ease 0.8s;
+        }
+
+        .pricing-card.visible .order-btn {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .order-btn:hover {
+            background-color: #ddd;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(255, 255, 255, 0.2);
+        }
+
+        .order-btn i {
+            font-size: 1.2rem;
+        }
+
+        /* Кастомный тариф */
+        .custom-tariff {
+            margin-top: 60px;
+            padding: 40px;
+            background-color: rgba(0, 0, 0, 0.5);
+            border-radius: 15px;
+            text-align: center;
+            opacity: 0;
+            transform: translateY(50px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+
+        .custom-tariff.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .custom-tariff h2 {
+            font-size: 2.2rem;
+            margin-bottom: 30px;
+            color: #fff;
+        }
+
+        .custom-controls {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            flex-wrap: wrap;
+            margin-bottom: 40px;
+        }
+
+        .custom-option {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .custom-tariff.visible .custom-option {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .custom-tariff.visible .custom-option:nth-child(1) { transition: all 0.5s ease 0.2s; }
+        .custom-tariff.visible .custom-option:nth-child(2) { transition: all 0.5s ease 0.3s; }
+
+        .custom-option label {
+            font-size: 1.1rem;
+            font-weight: bold;
+        }
+
+        .custom-select {
+            background-color: #111;
+            color: #fff;
+            border: 2px solid #333;
+            padding: 10px 15px;
+            border-radius: 8px;
+            font-size: 1rem;
+            min-width: 180px;
+            transition: all 0.3s;
+        }
+
+        .custom-select:focus {
+            outline: none;
+            border-color: #fff;
+            box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.1);
+        }
+
+        .custom-result {
+            background-color: #111;
+            padding: 25px;
+            border-radius: 10px;
+            margin-top: 25px;
+            border: 2px solid #fff;
+            opacity: 0;
+            transform: scale(0.9);
+            transition: all 0.5s ease;
+        }
+
+        .custom-tariff.visible .custom-result {
+            opacity: 1;
+            transform: scale(1);
+            transition-delay: 0.4s;
+        }
+
+        .custom-price {
+            font-size: 2.2rem;
+            font-weight: bold;
+            color: #fff;
+            margin-bottom: 10px;
+        }
+
+        .custom-saving {
+            font-size: 1.2rem;
+            color: #aaa;
+            margin-bottom: 20px;
+        }
+
+        /* Кнопка заказа в кастомном тарифе */
+        .custom-order-btn {
+            margin-top: 20px;
+        }
+
+        .custom-order-btn a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            background-color: #fff;
+            color: #000;
+            padding: 12px 25px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            border-radius: 50px;
+            text-decoration: none;
+            transition: all 0.3s;
+            opacity: 0;
+            transform: scale(0.9);
+            transition: all 0.5s ease 0.6s;
+        }
+
+        .custom-tariff.visible .custom-order-btn a {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .custom-order-btn a:hover {
+            background-color: #ddd;
+            transform: scale(1.05);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Кнопка связи */
+        .contact-section {
+            padding: 60px 0;
+            text-align: center;
+            opacity: 0;
+            transform: translateY(50px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+
+        .contact-section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .contact-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            background-color: #fff;
+            color: #000;
+            padding: 15px 30px;
+            font-size: 1.3rem;
+            font-weight: bold;
+            border-radius: 50px;
+            text-decoration: none;
+            transition: all 0.3s;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+            opacity: 0;
+            transform: scale(0.9);
+        }
+
+        .contact-section.visible .contact-btn {
+            opacity: 1;
+            transform: scale(1);
+            transition: all 0.5s ease 0.2s;
+        }
+
+        .contact-btn:hover {
+            background-color: #ddd;
+            transform: scale(1.05);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+        }
+
+        .contact-btn i {
+            font-size: 1.5rem;
+        }
+
+        /* Футер */
+        footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 25px 0;
+            text-align: center;
+            color: #777;
+            font-size: 0.9rem;
+            border-top: 1px solid #333;
+            background-color: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 999;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+
+        footer.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        .footer-content p {
+            margin-bottom: 8px;
+            line-height: 1.5;
+        }
+
+        .footer-content p:first-child {
+            font-size: 1rem;
+            color: #aaa;
+            margin-bottom: 10px;
+        }
+
+        .footer-content p:last-child {
+            font-size: 0.9rem;
+            color: #888;
+            margin-bottom: 0;
+        }
+
+        /* Мобильное меню */
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 280px;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.98);
+            backdrop-filter: blur(10px);
+            z-index: 1001;
+            padding: 80px 20px 20px;
+            transition: right 0.4s ease;
+            box-shadow: -5px 0 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .mobile-menu.active {
+            right: 0;
+        }
+
+        .mobile-menu-header {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            right: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #333;
+        }
+
+        .mobile-logo {
+            font-size: 1.4rem;
+            font-weight: 900;
+            letter-spacing: 1.5px;
+            color: #fff;
+            text-decoration: none;
+            text-transform: uppercase;
+        }
+
+        .mobile-menu-links {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+            margin-top: 30px;
+        }
+
+        .mobile-menu-links a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 1.2rem;
+            padding: 12px 0;
+            border-bottom: 1px solid #333;
+            transition: color 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .mobile-menu-links a:hover {
+            color: #aaa;
+        }
+
+        .mobile-menu-links a i {
+            width: 20px;
+            text-align: center;
+        }
+
+        .close-menu-btn {
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 5px;
+        }
+
+        /* Адаптивность */
+        @media (max-width: 1200px) {
+            .container {
+                padding: 0 20px;
+            }
+            
+            .nav-links {
+                gap: 20px;
+            }
+        }
+
+        @media (max-width: 992px) {
+            .hero h1 {
+                font-size: 3.5rem;
+            }
+            
+            .hero p {
+                font-size: 1.2rem;
+            }
+            
+            .section-title {
+                font-size: 2.5rem;
+            }
+            
+            .video-container.center .video-item {
+                transform: scale(1);
+            }
+            
+            .video-container.center.visible .video-item {
+                transform: scale(1);
+            }
+            
+            .pricing-card.featured {
+                transform: scale(1);
+            }
+            
+            .pricing-card.featured.visible {
+                transform: scale(1);
+            }
+            
+            .pricing-card.featured:hover {
+                transform: translateY(-10px);
+            }
+            
+            .nav-links {
+                gap: 15px;
+            }
+            
+            .nav-links a {
+                font-size: 0.95rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero {
+                text-align: center;
+                padding-top: 70px;
+                height: auto;
+                min-height: 100vh;
+            }
+            
+            .hero h1 {
+                font-size: 2.8rem;
+            }
+            
+            .section-title {
+                font-size: 2.2rem;
+                margin-bottom: 40px;
+            }
+            
+            .video-gallery {
+                gap: 20px;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .video-container {
+                width: 100%;
+                max-width: 280px;
+            }
+            
+            .video-item {
+                width: 100%;
+                height: 498px;
+            }
+            
+            .video-caption {
+                max-width: 100%;
+            }
+            
+            .pricing-card {
+                width: 100%;
+                max-width: 400px;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .logo {
+                font-size: 1.3rem;
+            }
+            
+            .complexity-buttons {
+                flex-direction: column;
+                align-items: center;
+                gap: 10px;
+            }
+            
+            .complexity-btn {
+                width: 100%;
+                max-width: 300px;
+            }
+            
+            .custom-controls {
+                flex-direction: column;
+                align-items: center;
+                gap: 20px;
+            }
+            
+            .custom-select {
+                width: 100%;
+                max-width: 300px;
+            }
+
+            /* Новый порядок видео на мобильных устройствах */
+            .video-gallery {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 30px;
+            }
+            
+            /* Переопределяем порядок видео на мобильных устройствах */
+            .video-container:nth-child(1) { order: 2; } /* Первое видео становится вторым */
+            .video-container:nth-child(2) { order: 1; } /* Второе видео (с подписью) становится первым */
+            .video-container:nth-child(3) { order: 3; } /* Третье видео остается третьим */
+            
+            /* Сбрасываем анимационные задержки для нового порядка */
+            .video-container:nth-child(1) { transition-delay: 0.2s; } /* Бывший первый теперь второй */
+            .video-container:nth-child(2) { transition-delay: 0.1s; } /* Бывший второй теперь первый */
+            .video-container:nth-child(3) { transition-delay: 0.3s; } /* Третий без изменений */
+        }
+
+        @media (max-width: 576px) {
+            .hero h1 {
+                font-size: 2.2rem;
+                letter-spacing: 2px;
+            }
+            
+            .hero p {
+                font-size: 1.1rem;
+            }
+            
+            .video-item {
+                height: 445px;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+            
+            .pricing-price, .custom-price {
+                font-size: 1.8rem;
+            }
+            
+            .contact-btn {
+                padding: 12px 25px;
+                font-size: 1.2rem;
+            }
+            
+            .order-btn {
+                padding: 10px 20px;
+                font-size: 0.95rem;
+            }
+            
+            .logo {
+                font-size: 1.2rem;
+                letter-spacing: 1px;
+            }
+            
+            .mobile-menu {
+                width: 100%;
+            }
+            
+            .custom-tariff {
+                padding: 30px 15px;
+            }
+            
+            .footer-content p:first-child {
+                font-size: 0.95rem;
+            }
+            
+            .footer-content p:last-child {
+                font-size: 0.85rem;
+            }
+        }
+
+        @media (max-width: 400px) {
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+            
+            .logo {
+                font-size: 1.1rem;
+            }
+            
+            .video-item {
+                height: 400px;
+            }
+            
+            .video-container {
+                width: 95%;
+            }
+            
+            footer {
+                padding: 20px 0;
+            }
+            
+            .footer-content p:first-child {
+                font-size: 0.9rem;
+            }
+            
+            .footer-content p:last-child {
+                font-size: 0.8rem;
+            }
+            
+            .order-btn {
+                padding: 8px 16px;
+                font-size: 0.9rem;
+            }
+            
+            .custom-order-btn a {
+                padding: 10px 20px;
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Эффект сетки -->
+    <div id="grid-effect"></div>
+    <div id="light-spot"></div>
+
+    <!-- Навигационная панель -->
+    <nav class="navbar">
+        <div class="container">
+            <!-- Левая сторона - Название агентства -->
+            <a href="#" class="logo">Mercury Agency</a>
+
+            <!-- Правая сторона - Панели навигации -->
+            <div class="nav-links">
+                <a href="#works">Примеры работ</a>
+                <a href="#pricing">Тарифы</a>
+                <a href="#contact">Связаться</a>
+            </div>
+
+            <!-- Кнопка мобильного меню -->
+            <button class="mobile-menu-btn" id="mobileMenuBtn">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Мобильное меню -->
+    <div class="mobile-menu" id="mobileMenu">
+        <div class="mobile-menu-header">
+            <a href="#" class="mobile-logo">Mercury Agency</a>
+            <button class="close-menu-btn" id="closeMenuBtn">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        
+        <div class="mobile-menu-links">
+            <a href="#works" class="mobile-nav-link">
+                <i class="fas fa-play-circle"></i> Примеры работ
+            </a>
+            <a href="#pricing" class="mobile-nav-link">
+                <i class="fas fa-tags"></i> Тарифы
+            </a>
+            <a href="#contact" class="mobile-nav-link">
+                <i class="fas fa-paper-plane"></i> Связаться
+            </a>
+            <a href="#" class="mobile-nav-link">
+                <i class="fas fa-home"></i> Главная
+            </a>
+        </div>
+    </div>
+
+    <!-- Герой секция -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Mercury Agency</h1>
+                <p>Агентство которое повышает качество ваших видео, увеличивает охваты, делает видео продажными.</p>
+                <p>Мы не просто монтируем видео — мы создаем контент, который цепляет, вовлекает и конвертирует. Наши специалисты анализируют целевую аудиторию, тренды платформ и создают видео, которые действительно работают на ваш бизнес.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Секция работ -->
+    <section class="works" id="works">
+        <div class="container">
+            <h2 class="section-title">Наши работы</h2>
+            
+            <!-- Видео галерея с вашими видео -->
+            <div class="video-gallery">
+                <!-- Видео 1 -->
+                <div class="video-container">
+                    <div class="video-item">
+                        <div class="video-wrapper">
+                            <video width="100%" height="100%" controls playsinline>
+                                <source src="video1.mp4" type="video/mp4">
+                                <div class="video-fallback">
+                                    Видео 1 не загрузилось<br>
+                                    Убедитесь что файл video1.mp4 находится в папке с сайтом
+                                </div>
+                            </video>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Видео 2 с подписью ПОД видео -->
+                <div class="video-container center">
+                    <div class="video-item">
+                        <div class="video-wrapper">
+                            <video width="100%" height="100%" controls playsinline>
+                                <source src="video2.mp4" type="video/mp4">
+                                <div class="video-fallback">
+                                    Видео 2 не загрузилось<br>
+                                    Убедитесь что файл video2.mp4 находится в папке с сайтом
+                                </div>
+                            </video>
+                        </div>
+                    </div>
+                    <!-- Подпись ПОД видео -->
+                    <div class="video-caption">
+                        <a href="https://t.me/prodsimon" target="_blank">
+                            <i class="fab fa-telegram"></i> Монтаж для Simon Gelfenbuym
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Видео 3 -->
+                <div class="video-container">
+                    <div class="video-item">
+                        <div class="video-wrapper">
+                            <video width="100%" height="100%" controls playsinline>
+                                <source src="video3.mp4" type="video/mp4">
+                                <div class="video-fallback">
+                                    Видео 3 не загрузилось<br>
+                                    Убедитесь что файл video3.mp4 находится в папке с сайтом
+                                </div>
+                            </video>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Секция тарифов -->
+    <section class="pricing" id="pricing">
+        <div class="container">
+            <h2 class="section-title">Тарифы на монтаж</h2>
+            
+            <!-- Выбор сложности монтажа -->
+            <div class="complexity-selector">
+                <div class="complexity-buttons">
+                    <button class="complexity-btn active" data-complexity="light">Легкий монтаж</button>
+                    <button class="complexity-btn" data-complexity="medium">Средний монтаж</button>
+                    <button class="complexity-btn" data-complexity="quality">Качественный монтаж</button>
+                </div>
+            </div>
+
+            <!-- Тарифы (будут меняться в зависимости от выбора сложности) -->
+            <div class="pricing-cards" id="pricingCards">
+                <!-- Тарифы будут подгружаться через JavaScript -->
+            </div>
+
+            <!-- Кастомный тариф -->
+            <div class="custom-tariff">
+                <h2>Индивидуальный тариф</h2>
+                <p>Создайте свой уникальный пакет, выбрав сложность монтажа и количество видео</p>
+                
+                <div class="custom-controls">
+                    <div class="custom-option">
+                        <label for="customComplexity">Сложность монтажа</label>
+                        <select id="customComplexity" class="custom-select">
+                            <option value="light">Легкий монтаж</option>
+                            <option value="medium">Средний монтаж</option>
+                            <option value="quality">Качественный монтаж</option>
+                        </select>
+                    </div>
+                    
+                    <div class="custom-option">
+                        <label for="customVideos">Количество видео</label>
+                        <input type="range" id="customVideos" class="custom-select" min="1" max="50" value="10">
+                        <div id="videoCount">10 видео</div>
+                    </div>
+                </div>
+                
+                <div class="custom-result">
+                    <div class="custom-price" id="customPrice">15.000 ₽</div>
+                    <div class="custom-saving" id="customSaving">Выгода: 20%</div>
+                    
+                    <!-- Кнопка заказа для кастомного тарифа -->
+                    <div class="custom-order-btn">
+                        <a href="https://t.me/m/0N1lHs5UYTUy" target="_blank" id="customOrderBtn">
+                            <i class="fab fa-telegram"></i> Сделать заказ
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Кнопка связи -->
+    <section class="contact-section" id="contact">
+        <div class="container">
+            <a href="https://t.me/merty_whq" target="_blank" class="contact-btn">
+                <i class="fab fa-telegram"></i> Связаться с нами
+            </a>
+        </div>
+    </section>
+
+    <!-- Футер -->
+    <footer>
+        <div class="footer-content">
+            <p>© 2025 Mercury Agency. Все права защищены.</p>
+            <p>Агентство профессионального монтажа видео</p>
+        </div>
+    </footer>
+
+    <script>
+        // Эффект подсветки при движении курсора
+        document.addEventListener('mousemove', function(e) {
+            const lightSpot = document.getElementById('light-spot');
+            lightSpot.style.left = e.clientX + 'px';
+            lightSpot.style.top = e.clientY + 'px';
+        });
+
+        // Функция для проверки видимости элементов при скролле
+        function checkVisibility() {
+            const elements = document.querySelectorAll(
+                '.section-title, .video-container, .complexity-selector, ' +
+                '.pricing-card, .custom-tariff, .contact-section, footer'
+            );
+            
+            const windowHeight = window.innerHeight;
+            const windowTop = window.scrollY;
+            const windowBottom = windowTop + windowHeight;
+            
+            elements.forEach(element => {
+                const elementTop = element.offsetTop;
+                const elementBottom = elementTop + element.offsetHeight;
+                
+                // Проверяем, виден ли элемент хотя бы на 20%
+                if (elementBottom >= windowTop + (windowHeight * 0.2) && 
+                    elementTop <= windowBottom - (windowHeight * 0.2)) {
+                    element.classList.add('visible');
+                }
+            });
+            
+            // Особый случай для футера - показываем его когда пользователь прокрутил достаточно низко
+            const footer = document.querySelector('footer');
+            const documentHeight = document.documentElement.scrollHeight;
+            const scrollPosition = windowTop + windowHeight;
+            
+            // Показываем футер когда прокрутили 80% страницы
+            if (scrollPosition >= documentHeight * 0.8) {
+                footer.classList.add('visible');
+            }
+        }
+        
+        // Проверяем видимость при загрузке и скролле
+        window.addEventListener('load', checkVisibility);
+        window.addEventListener('scroll', checkVisibility);
+        // Проверяем сразу после загрузки DOM
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(checkVisibility, 100);
+        });
+        
+        // Управление мобильным меню
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const closeMenuBtn = document.getElementById('closeMenuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
+        
+        mobileMenuBtn.addEventListener('click', function() {
+            mobileMenu.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        });
+        
+        closeMenuBtn.addEventListener('click', function() {
+            mobileMenu.classList.remove('active');
+            document.body.style.overflow = '';
+        });
+        
+        mobileNavLinks.forEach(link => {
+            link.addEventListener('click', function() {
+                mobileMenu.classList.remove('active');
+                document.body.style.overflow = '';
+            });
+        });
+        
+        // Закрытие меню при клике вне его области
+        document.addEventListener('click', function(event) {
+            const isClickInsideMenu = mobileMenu.contains(event.target);
+            const isClickOnMenuBtn = mobileMenuBtn.contains(event.target);
+            
+            if (!isClickInsideMenu && !isClickOnMenuBtn && mobileMenu.classList.contains('active')) {
+                mobileMenu.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        });
+        
+        // Плавная прокрутка для ссылок навигации
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    // Закрываем мобильное меню если оно открыто
+                    mobileMenu.classList.remove('active');
+                    document.body.style.overflow = '';
+                    
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 70,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Данные по тарифам с ссылками
+        const tariffData = {
+            light: {
+                name: "Легкий монтаж",
+                basePrice: 2000,
+                packages: [
+                    { 
+                        videos: 10, 
+                        price: 15000, 
+                        saving: 25,
+                        link: "https://t.me/m/f1FhZICpZTky"
+                    },
+                    { 
+                        videos: 15, 
+                        price: 20000, 
+                        saving: 33,
+                        link: "https://t.me/m/vWr0xcegNDA6"
+                    },
+                    { 
+                        videos: 30, 
+                        price: 33000, 
+                        saving: 45,
+                        link: "https://t.me/m/3smi9aOpNTdi"
+                    }
+                ]
+            },
+            medium: {
+                name: "Средний монтаж",
+                basePrice: 2500,
+                packages: [
+                    { 
+                        videos: 10, 
+                        price: 20000, 
+                        saving: 20,
+                        link: "https://t.me/m/qLlkEP32NDky"
+                    },
+                    { 
+                        videos: 15, 
+                        price: 25000, 
+                        saving: 33,
+                        link: "https://t.me/m/WnE1MsX3MWEy"
+                    },
+                    { 
+                        videos: 30, 
+                        price: 45000, 
+                        saving: 40,
+                        link: "https://t.me/m/kTkMFaBOYmUy"
+                    }
+                ]
+            },
+            quality: {
+                name: "Качественный монтаж",
+                basePrice: 5000,
+                packages: [
+                    { 
+                        videos: 10, 
+                        price: 35000, 
+                        saving: 30,
+                        link: "https://t.me/m/pd1J-1UPNDEy"
+                    },
+                    { 
+                        videos: 15, 
+                        price: 45000, 
+                        saving: 40,
+                        link: "https://t.me/m/2tg67KQ9NWUy"
+                    },
+                    { 
+                        videos: 30, 
+                        price: 80000, 
+                        saving: 45,
+                        link: "https://t.me/m/eZtTnyXdZTdi"
+                    }
+                ]
+            }
+        };
+        
+        // Ссылки для индивидуальных тарифов
+        const customTariffLinks = {
+            light: "https://t.me/m/0N1lHs5UYTUy",
+            medium: "https://t.me/m/0N1lHs5UYTUy",
+            quality: "https://t.me/m/0N1lHs5UYTUy"
+        };
+        
+        // Текущая выбранная сложность
+        let currentComplexity = 'light';
+        
+        // Функция для обновления отображения тарифов
+        function updateTariffs() {
+            const pricingCards = document.getElementById('pricingCards');
+            const data = tariffData[currentComplexity];
+            
+            let html = '';
+            
+            data.packages.forEach((pkg, index) => {
+                const isFeatured = index === 1;
+                
+                html += `
+                    <div class="pricing-card ${isFeatured ? 'featured' : ''}">
+                        <h3>${pkg.videos} видео</h3>
+                        <div class="pricing-price">${pkg.price.toLocaleString('ru-RU')} ₽</div>
+                        <div class="pricing-feature">${data.name}</div>
+                        <div class="pricing-feature">Цена за видео: ${Math.round(pkg.price / pkg.videos).toLocaleString('ru-RU')} ₽</div>
+                        <div class="pricing-feature">Без скидки: ${data.basePrice.toLocaleString('ru-RU')} ₽ за видео</div>
+                        <div class="pricing-saving">Выгода: ${pkg.saving}%</div>
+                        
+                        <!-- Кнопка заказа -->
+                        <div class="pricing-order-btn">
+                            <a href="${pkg.link}" target="_blank" class="order-btn" 
+                               data-tariff="${data.name}" data-videos="${pkg.videos}" data-price="${pkg.price}">
+                                <i class="fab fa-telegram"></i> Заказать ${pkg.videos} видео
+                            </a>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            pricingCards.innerHTML = html;
+            
+            // Проверяем видимость новых элементов
+            setTimeout(checkVisibility, 100);
+            
+            // Обновляем кастомный тариф
+            updateCustomTariff();
+        }
+        
+        // Функция для обновления кастомного тарифа
+        function updateCustomTariff() {
+            const complexity = document.getElementById('customComplexity').value;
+            const videoCount = parseInt(document.getElementById('customVideos').value);
+            const videoCountDisplay = document.getElementById('videoCount');
+            const customPriceElement = document.getElementById('customPrice');
+            const customSavingElement = document.getElementById('customSaving');
+            const customOrderBtn = document.getElementById('customOrderBtn');
+            
+            videoCountDisplay.textContent = `${videoCount} видео`;
+            
+            const data = tariffData[complexity];
+            const baseTotal = videoCount * data.basePrice;
+            
+            // Рассчитываем скидку в зависимости от количества видео
+            let discount = 0;
+            
+            if (videoCount >= 30) {
+                discount = complexity === 'light' ? 45 : 
+                          complexity === 'medium' ? 40 : 45;
+            } else if (videoCount >= 15) {
+                discount = complexity === 'light' ? 33 : 
+                          complexity === 'medium' ? 33 : 40;
+            } else if (videoCount >= 10) {
+                discount = complexity === 'light' ? 25 : 
+                          complexity === 'medium' ? 20 : 30;
+            } else if (videoCount >= 5) {
+                discount = 10;
+            }
+            
+            // Округляем скидку до ближайших 5%
+            discount = Math.round(discount / 5) * 5;
+            
+            const finalPrice = Math.round(baseTotal * (100 - discount) / 100);
+            
+            customPriceElement.textContent = `${finalPrice.toLocaleString('ru-RU')} ₽`;
+            customSavingElement.textContent = `Выгода: ${discount}% (без скидки: ${baseTotal.toLocaleString('ru-RU')} ₽)`;
+            
+            // Обновляем ссылку и текст кнопки заказа для кастомного тарифа
+            customOrderBtn.href = customTariffLinks[complexity];
+            customOrderBtn.innerHTML = `<i class="fab fa-telegram"></i> Заказать ${videoCount} видео`;
+        }
+        
+        // Инициализация кнопок выбора сложности
+        document.querySelectorAll('.complexity-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                // Убираем активный класс у всех кнопок
+                document.querySelectorAll('.complexity-btn').forEach(b => {
+                    b.classList.remove('active');
+                });
+                
+                // Добавляем активный класс нажатой кнопке
+                this.classList.add('active');
+                
+                // Обновляем текущую сложность
+                currentComplexity = this.getAttribute('data-complexity');
+                
+                // Обновляем тарифы
+                updateTariffs();
+            });
+        });
+        
+        // Инициализация кастомного тарифа
+        document.getElementById('customComplexity').addEventListener('change', updateCustomTariff);
+        document.getElementById('customVideos').addEventListener('input', function() {
+            updateCustomTariff();
+            // Анимация изменения числа видео
+            const videoCountDisplay = document.getElementById('videoCount');
+            videoCountDisplay.style.transform = 'scale(1.1)';
+            setTimeout(() => {
+                videoCountDisplay.style.transform = 'scale(1)';
+            }, 200);
+        });
+        
+        // Добавляем обработчики клика на кнопки заказа (динамически созданные)
+        document.addEventListener('click', function(e) {
+            if (e.target.closest('.order-btn')) {
+                const btn = e.target.closest('.order-btn');
+                const tariffName = btn.getAttribute('data-tariff');
+                const videosCount = btn.getAttribute('data-videos');
+                const price = btn.getAttribute('data-price');
+                const link = btn.getAttribute('href');
+                
+                // Логирование в консоль для отладки
+                console.log(`Заказ: ${tariffName}, ${videosCount} видео, ${price} ₽`);
+                console.log(`Ссылка: ${link}`);
+                
+                // Сохранение данных заказа в localStorage
+                localStorage.setItem('lastOrder', JSON.stringify({
+                    tariff: tariffName,
+                    videos: videosCount,
+                    price: price,
+                    link: link,
+                    timestamp: new Date().toISOString()
+                }));
+            }
+        });
+        
+        // Инициализация страницы
+        updateTariffs();
+        
+        // Проверка загрузки видео
+        function checkVideoLoad() {
+            const videos = document.querySelectorAll('video source');
+            videos.forEach((source, index) => {
+                const video = source.parentElement;
+                video.addEventListener('error', function() {
+                    console.warn(`Видео ${index + 1} не загрузилось. Убедитесь что файл video${index + 1}.mp4 находится в папке с сайтом.`);
+                });
+                
+                // Добавляем анимацию при наведении на видео
+                video.addEventListener('mouseenter', function() {
+                    this.style.transform = 'scale(1.05)';
+                });
+                
+                video.addEventListener('mouseleave', function() {
+                    this.style.transform = 'scale(1)';
+                });
+            });
+        }
+        
+        // Проверяем загрузку видео
+        window.addEventListener('load', checkVideoLoad);
+        
+        // Автоматически показываем футер после загрузки страницы
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                const footer = document.querySelector('footer');
+                footer.classList.add('visible');
+            }, 1000);
+        });
+        
+        // Вывод информации в консоль
+        console.log('Mercury Agency - система тарифов загружена');
+        console.log('Добавлены ссылки на заказ для каждого тарифа:');
+        console.log('Легкий монтаж 10 видео: https://t.me/m/f1FhZICpZTky');
+        console.log('Легкий монтаж 15 видео: https://t.me/m/vWr0xcegNDA6');
+        console.log('Легкий монтаж 30 видео: https://t.me/m/3smi9aOpNTdi');
+        console.log('Средний монтаж 10 видео: https://t.me/m/qLlkEP32NDky');
+        console.log('Средний монтаж 15 видео: https://t.me/m/WnE1MsX3MWEy');
+        console.log('Средний монтаж 30 видео: https://t.me/m/kTkMFaBOYmUy');
+        console.log('Качественный монтаж 10 видео: https://t.me/m/pd1J-1UPNDEy');
+        console.log('Качественный монтаж 15 видео: https://t.me/m/2tg67KQ9NWUy');
+        console.log('Качественный монтаж 30 видео: https://t.me/m/eZtTnyXdZTdi');
+    </script>
+</body>
+</html>
