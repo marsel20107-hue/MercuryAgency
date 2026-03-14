@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mercury Agency · монтаж уровня эксперт</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Font Awesome 6 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <!-- GSAP -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+  <!-- Local CSS -->
+  <link rel="stylesheet" href="./assets/style.css">
+</head>
+
+<body>
+  <!-- Background Effects -->
+  <div class="bg-gradient"></div>
+  <div class="bg-noise"></div>
+  <div class="bg-grid"></div>
+  <div class="bg-orb orb-1"></div>
+  <div class="bg-orb orb-2"></div>
+  <div class="bg-orb orb-3"></div>
+
+  <!-- Navigation -->
+  <header class="navbar" id="navbar">
+    <div class="nav-container">
+      <a href="#top" class="nav-logo">
+        <span class="logo-text">Mercury</span>
+        <span class="logo-dot"></span>
+      </a>
+
+      <nav class="nav-menu" id="navMenu">
+        <a href="#about" class="nav-link" data-text="О нас">О нас</a>
+        <a href="#clients" class="nav-link" data-text="Клиенты">Клиенты</a>
+        <a href="#works" class="nav-link" data-text="Работы">Работы</a>
+        <a href="#process" class="nav-link" data-text="Процесс">Процесс</a>
+        <a href="#contact" class="nav-link" data-text="Контакт">Контакт</a>
+      </nav>
+
+      <a href="https://t.me/merty_whq" class="nav-cta" target="_blank" rel="noopener noreferrer">
+        <span>Написать</span>
+        <i class="fab fa-telegram"></i>
+      </a>
+
+      <button class="nav-toggle" id="navToggle" aria-label="Открыть меню">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero" id="top">
+    <div class="hero-container">
+      <div class="hero-content">
+        <div class="hero-badge" data-reveal="up">
+          <i class="fas fa-sparkles"></i>
+          <span>Premium Editing</span>
+        </div>
+
+        <h1 class="hero-title" data-reveal="up">
+          <span class="title-line">Монтаж, который</span>
+          <span class="title-line highlight">поднимает уровень</span>
+          <span class="title-line">эксперта</span>
+        </h1>
+
+        <p class="hero-description" data-reveal="up">
+          Вы можете быть сильным специалистом: разбираться в нише, делать сделки, обучать, влиять.
+          Но если подача слабая — рынок этого не видит.
+        </p>
+
+        <blockquote class="hero-quote" data-reveal="up">
+          <span class="quote-mark">"</span>
+          В коротком контенте люди оценивают не глубину мыслей, а то, как они упакованы.
+          И монтаж решает больше, чем кажется.
+          <span class="quote-mark">"</span>
+        </blockquote>
+
+        <div class="hero-actions" data-reveal="up">
+          <a href="https://t.me/merty_whq" class="btn btn-primary" target="_blank" rel="noopener noreferrer">
+            <span>Начать проект</span>
+            <i class="fas fa-arrow-right"></i>
+          </a>
+          <a href="#works" class="btn btn-secondary">
+            <span>Смотреть работы</span>
+            <i class="fas fa-play"></i>
+          </a>
+        </div>
+
+        <div class="hero-stats" data-reveal="up">
+          <div class="stat-item">
+            <span class="stat-number" data-count="500">0</span>
+            <span class="stat-suffix">+</span>
+            <span class="stat-label">видео смонтировано</span>
+          </div>
+          <div class="stat-divider"></div>
+          <div class="stat-item">
+            <span class="stat-number" data-count="50">0</span>
+            <span class="stat-suffix">+</span>
+            <span class="stat-label">экспертов на борту</span>
+          </div>
+          <div class="stat-divider"></div>
+          <div class="stat-item">
+            <span class="stat-number" data-count="3">0</span>
+            <span class="stat-suffix"> года</span>
+            <span class="stat-label">опыта в монтаже</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-visual" data-reveal="scale">
+        <div class="hero-logo">
+          <img src="./assets/logo.png" alt="Mercury Agency Logo">
+        </div>
+      </div>
+    </div>
+
+    <!-- Улучшенная кнопка "листай вниз" -->
+    <button class="scroll-down-btn" id="scrollDownBtn" aria-label="Листать вниз">
+      <div class="scroll-down-content">
+        <span class="scroll-down-text">листай вниз</span>
+        <div class="scroll-down-arrow">
+          <i class="fas fa-chevron-down"></i>
+        </div>
+      </div>
+      <div class="scroll-down-pulse"></div>
+    </button>
+  </section>
+
+  <!-- About Section -->
+  <section class="about" id="about">
+    <div class="section-container">
+      <div class="about-content">
+        <div class="about-text" data-reveal="left">
+          <span class="section-kicker">О нас</span>
+          <h2 class="section-title">
+            Mercury — для тех, кто уже вырос из «обычного монтажа»
+          </h2>
+          <p class="section-description">
+            Если вы строите личный бренд и продаёте через контент — монтаж становится стратегией, а не задачей.
+          </p>
+        </div>
+        <div class="about-features" data-reveal="right">
+          <div class="feature-item">
+            <div class="feature-icon">
+              <i class="fas fa-bolt"></i>
+            </div>
+            <div class="feature-text">
+              <span class="feature-title">Скорость</span>
+              <span class="feature-desc">Ответ в течение дня</span>
+            </div>
+          </div>
+          <div class="feature-item">
+            <div class="feature-icon">
+              <i class="fas fa-palette"></i>
+            </div>
+            <div class="feature-text">
+              <span class="feature-title">Стиль</span>
+              <span class="feature-desc">Монтаж под бренд</span>
+            </div>
+          </div>
+          <div class="feature-item">
+            <div class="feature-icon">
+              <i class="fas fa-heart"></i>
+            </div>
+            <div class="feature-text">
+              <span class="feature-title">Живость</span>
+              <span class="feature-desc">Без потери эмоций</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Clients Section -->
+  <section class="clients" id="clients">
+    <div class="section-container">
+      <div class="section-header" data-reveal="up">
+        <span class="section-kicker">Наши клиенты</span>
+        <h2 class="section-title">С кем мы работаем?</h2>
+        <p class="section-subtitle">Три направления, где подача решает продажи</p>
+      </div>
+
+      <div class="clients-grid">
+        <div class="client-card" data-reveal="up" data-delay="0">
+          <div class="card-inner">
+            <div class="card-front">
+              <div class="client-number">01</div>
+              <div class="client-icon">
+                <i class="fas fa-chart-line"></i>
+              </div>
+              <h3 class="client-title">Эксперты и инфобизнес</h3>
+              <p class="client-tags">упаковка смысла · удержание</p>
+            </div>
+            <div class="card-back">
+              <i class="fas fa-chart-line"></i>
+              <span>Превращаем сложные идеи в цепляющий контент</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="client-card" data-reveal="up" data-delay="0.1">
+          <div class="card-inner">
+            <div class="card-front">
+              <div class="client-number">02</div>
+              <div class="client-icon">
+                <i class="fas fa-building"></i>
+              </div>
+              <h3 class="client-title">Риелторы и инвесторы</h3>
+              <p class="client-tags">премиум-подача · доверие</p>
+            </div>
+            <div class="card-back">
+              <i class="fas fa-building"></i>
+              <span>Создаём имидж профессионала рынка</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="client-card" data-reveal="up" data-delay="0.2">
+          <div class="card-inner">
+            <div class="card-front">
+              <div class="client-number">03</div>
+              <div class="client-icon">
+                <i class="fas fa-video"></i>
+              </div>
+              <h3 class="client-title">Продюсеры личных брендов</h3>
+              <p class="client-tags">система · скорость · стиль</p>
+            </div>
+            <div class="card-back">
+              <i class="fas fa-video"></i>
+              <span>Масштабируем контент без потери качества</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="clients-tagline" data-reveal="up">
+        <span>Mercury — когда монтаж становится конкурентным преимуществом</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Works Section (полностью переделана) -->
+  <section class="works" id="works">
+    <div class="section-container">
+      <div class="section-header" data-reveal="up">
+        <span class="section-kicker">Портфолио</span>
+        <h2 class="section-title">Примеры наших работ</h2>
+        <p class="section-subtitle">6 вертикальных + 3 горизонтальных форматов</p>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 60px;">
+        <div class="works-grid-5">
+          <!-- Vertical Videos -->
+          <div class="work-item vertical" data-reveal="up" data-delay="0" data-video="video1.mp4">
+            <video class="work-video" preload="metadata" playsinline loop src="./assets/video/video1.mp4"></video>
+            <div class="preview-overlay"></div>
+            <div class="play-button">
+              <i class="fas fa-play"></i>
+            </div>
+            <div class="work-chip">эксперт · интервью</div>
+            <div class="work-info">
+              <h4>Вертикальный монтаж</h4>
+              <span>9:16 формат</span>
+            </div>
+          </div>
+
+          <div class="work-item vertical" data-reveal="up" data-delay="0.1" data-video="video2.mp4">
+            <video class="work-video" preload="metadata" playsinline loop src="./assets/video/video2.mp4"></video>
+            <div class="preview-overlay"></div>
+            <div class="play-button">
+              <i class="fas fa-play"></i>
+            </div>
+            <div class="work-chip">риелтор · объект</div>
+            <div class="work-info">
+              <h4>Подача премиум</h4>
+              <span>Презентация недвижимости</span>
+            </div>
+          </div>
+
+          <div class="work-item vertical" data-reveal="up" data-delay="0.2" data-video="video3.mp4">
+            <video class="work-video" preload="metadata" playsinline loop src="./assets/video/video3.mp4"></video>
+            <div class="preview-overlay"></div>
+            <div class="play-button">
+              <i class="fas fa-play"></i>
+            </div>
+            <div class="work-chip">инфобизнес · рилс</div>
+            <div class="work-info">
+              <h4>Удержание внимания</h4>
+              <span>Вирусный формат</span>
+            </div>
+          </div>
+
+          <div class="work-item vertical" data-reveal="up" data-delay="0" data-video="video4.mp4">
+            <video class="work-video" preload="metadata" playsinline loop src="./assets/video/video4.mp4"></video>
+            <div class="preview-overlay"></div>
+            <div class="play-button">
+              <i class="fas fa-play"></i>
+            </div>
+            <div class="work-chip">инвестор · аналитика</div>
+            <div class="work-info">
+              <h4>Структура · акценты</h4>
+              <span>Аналитический контент</span>
+            </div>
+          </div>
+
+          <div class="work-item vertical" data-reveal="up" data-delay="0.2" data-video="video5.mp4">
+            <video class="work-video" preload="metadata" playsinline loop src="./assets/video/video5.mp4"></video>
+            <div class="preview-overlay"></div>
+            <div class="play-button">
+              <i class="fas fa-play"></i>
+            </div>
+            <div class="work-chip">личный бренд · имидж</div>
+            <div class="work-info">
+              <h4>Стиль бренда</h4>
+              <span>Имиджевый контент</span>
+            </div>
+          </div>
+        </div>
+        <!-- Horizontal Videos -->
+        <div class="works-grid-3">
+          <div class="work-item horizontal" data-reveal="up" data-delay="0" data-video="video6.mp4">
+            <video class="work-video" preload="metadata" playsinline loop src="./assets/video/video6.mp4"></video>
+            <div class="preview-overlay"></div>
+            <div class="play-button">
+              <i class="fas fa-play"></i>
+            </div>
+            <div class="work-chip">YouTube · выпуск</div>
+            <div class="work-info">
+              <h4>Горизонтальный 16:9</h4>
+              <span>YouTube-формат</span>
+            </div>
+          </div>
+
+          <div class="work-item horizontal" data-reveal="up" data-delay="0.1" data-video="video7.mp4">
+            <video class="work-video" preload="metadata" playsinline loop src="./assets/video/video7.mp4"></video>
+            <div class="preview-overlay"></div>
+            <div class="play-button">
+              <i class="fas fa-play"></i>
+            </div>
+            <div class="work-chip">влог · кейс</div>
+            <div class="work-info">
+              <h4>Монтаж под сюжет</h4>
+              <span>Истории и кейсы</span>
+            </div>
+          </div>
+
+          <div class="work-item horizontal" data-reveal="up" data-delay="0.2" data-video="video8.mp4">
+            <video class="work-video" preload="metadata" playsinline loop src="./assets/video/video8.mp4"></video>
+            <div class="preview-overlay"></div>
+            <div class="play-button">
+              <i class="fas fa-play"></i>
+            </div>
+            <div class="work-chip">подкаст · студия</div>
+            <div class="work-info">
+              <h4>Ритм + графика</h4>
+              <span>Студийный подкаст</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Process Section -->
+  <section class="process" id="process">
+    <div class="section-container">
+      <div class="section-header" data-reveal="up">
+        <span class="section-kicker">Как мы работаем</span>
+        <h2 class="section-title">Процесс от заявки до результата</h2>
+        <p class="section-subtitle">5 простых шагов к идеальному монтажу</p>
+      </div>
+
+      <div class="process-timeline">
+        <div class="timeline-line" data-reveal="scale-x"></div>
+
+        <div class="timeline-steps">
+          <div class="timeline-step" data-reveal="up" data-delay="0">
+            <div class="step-marker">
+              <i class="fas fa-pen"></i>
+            </div>
+            <div class="step-content">
+              <span class="step-number">01</span>
+              <h4>Заявка</h4>
+              <p>Оставляете заявку на консультацию</p>
+            </div>
+          </div>
+
+          <div class="timeline-step" data-reveal="up" data-delay="0.15">
+            <div class="step-marker">
+              <i class="fas fa-calendar-check"></i>
+            </div>
+            <div class="step-content">
+              <span class="step-number">02</span>
+              <h4>Созвон</h4>
+              <p>Согласуем удобное время</p>
+            </div>
+          </div>
+
+          <div class="timeline-step" data-reveal="up" data-delay="0.3">
+            <div class="step-marker">
+              <i class="fas fa-handshake"></i>
+            </div>
+            <div class="step-content">
+              <span class="step-number">03</span>
+              <h4>Условия</h4>
+              <p>Обговариваем стиль и сроки</p>
+            </div>
+          </div>
+
+          <div class="timeline-step" data-reveal="up" data-delay="0.45">
+            <div class="step-marker">
+              <i class="fas fa-cloud-upload-alt"></i>
+            </div>
+            <div class="step-content">
+              <span class="step-number">04</span>
+              <h4>Материалы</h4>
+              <p>Присылаете исходники</p>
+            </div>
+          </div>
+
+          <div class="timeline-step" data-reveal="up" data-delay="0.6">
+            <div class="step-marker">
+              <i class="fas fa-play-circle"></i>
+            </div>
+            <div class="step-content">
+              <span class="step-number">05</span>
+              <h4>Результат</h4>
+              <p>Получаете сильные видео</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="cta" id="contact">
+    <div class="section-container">
+      <div class="cta-content" data-reveal="up">
+        <div class="cta-glow"></div>
+        <div class="cta-inner">
+          <h2 class="cta-title">
+            Если вы чувствуете, что ваш уровень выше, чем подача —
+            <span class="cta-highlight">вам подойдёт Mercury.</span>
+          </h2>
+
+          <a href="https://t.me/merty_whq" class="cta-button" target="_blank" rel="noopener noreferrer">
+            <span class="button-bg"></span>
+            <span class="button-content">
+              <i class="fab fa-telegram"></i>
+              <span>@merty_whq</span>
+            </span>
+          </a>
+
+          <div class="cta-features">
+            <span><i class="fas fa-shield-alt"></i> Конфиденциально</span>
+            <span><i class="fas fa-gem"></i> Аккуратно</span>
+            <span><i class="fas fa-paint-brush"></i> В стиле вашего бренда</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="section-container">
+      <div class="footer-content" data-reveal="up">
+        <div class="footer-brand">
+          <span class="footer-logo">Mercury</span>
+          <span class="footer-tagline">монтаж как стратегия</span>
+        </div>
+        <div class="footer-links">
+          <a href="#about">О нас</a>
+          <a href="#clients">Клиенты</a>
+          <a href="#works">Работы</a>
+          <a href="#process">Процесс</a>
+        </div>
+        <div class="footer-social">
+          <a href="https://t.me/merty_whq" target="_blank" rel="noopener noreferrer">
+            <i class="fab fa-telegram"></i>
+          </a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2024 Mercury Agency. Все права защищены.</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Fixed CTA Button -->
+  <button class="fixed-cta-btn" id="fixedCtaBtn" aria-label="Оставить заявку">
+    <i class="fas fa-paper-plane"></i>
+    <span>Оставить заявку</span>
+  </button>
+
+  <!-- Modal Form -->
+  <div class="modal-overlay" id="modalOverlay">
+    <div class="modal modal-large">
+      <button class="modal-close" id="modalClose" aria-label="Закрыть">
+        <i class="fas fa-times"></i>
+      </button>
+      <div class="modal-content">
+        <h3 class="modal-title">Оставить заявку</h3>
+        <p class="modal-subtitle">Расскажите о вашем проекте, и мы свяжемся с вами</p>
+        <form class="modal-form" id="telegramForm">
+          <div class="form-group">
+            <label for="telegramUsername">Telegram <span class="required">*</span></label>
+            <div class="input-wrapper">
+              <span class="input-prefix">@</span>
+              <input type="text" id="telegramUsername" name="username" placeholder="username" autocomplete="off" required>
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label for="phoneNumber">Телефон</label>
+            <div class="input-wrapper">
+              <span class="input-prefix"><i class="fas fa-phone"></i></span>
+              <input type="tel" id="phoneNumber" name="phone" placeholder="+7 (999) 999-99-99" autocomplete="tel">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="emailAddress">Email</label>
+            <div class="input-wrapper">
+              <span class="input-prefix"><i class="fas fa-envelope"></i></span>
+              <input type="email" id="emailAddress" name="email" placeholder="your@email.com" autocomplete="email">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="projectInfo">О проекте</label>
+            <div class="input-wrapper textarea-wrapper">
+              <textarea id="projectInfo" name="project" placeholder="Расскажите о вашем проекте: какой контент, объем, сроки..." rows="3"></textarea>
+            </div>
+          </div>
+          <button type="submit" class="modal-submit-btn" id="modalSubmit">
+            <span>Оставить заявку</span>
+            <i class="fas fa-arrow-right"></i>
+          </button>
+        </form>
+        <p class="modal-note">Ответим в течение 24 часов</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Success Notification -->
+  <div class="success-notification" id="successNotification">
+    <div class="success-content">
+      <div class="success-icon">
+        <i class="fas fa-check-circle"></i>
+      </div>
+      <h4 class="success-title">Заявка отправлена!</h4>
+      <p class="success-text">Мы свяжемся с вами в ближайшее время</p>
+    </div>
+  </div>
+
+  <script src="./assets/app.js"></script>
+</body>
+</html>
